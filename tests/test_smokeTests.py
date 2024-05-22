@@ -9,13 +9,10 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.chrome.options import Options
 
 class TestSmokeTests():
   def setup_method(self, method):
-    options = Options()
-    options.add_argument("--headless=new")
-    self.driver = webdriver.Chrome(options=options)
+    self.driver = webdriver.Chrome()
     self.vars = {}
   
   def teardown_method(self, method):
@@ -33,7 +30,8 @@ class TestSmokeTests():
   def test_test2(self):
     self.driver.get("http://127.0.0.1:5500/teton/1.6/index.html")
     self.driver.set_window_size(1891, 1150)
-    elements = self.driver.find_elements(By.CSS_SELECTOR, ".spotlight1 img")
+    self.driver.find_element(By.CSS_SELECTOR, "body").click()
+    elements = self.driver.find_elements(By.CSS_SELECTOR, ".spotlight1 > .centered-image")
     assert len(elements) > 0
     elements = self.driver.find_elements(By.CSS_SELECTOR, ".spotlight2 > .centered-image")
     assert len(elements) > 0
